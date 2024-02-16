@@ -16,6 +16,8 @@ class Main {
         this.createSentences();
         this.createParagraph();
 
+        console.log('teste')
+
     }
 
     createSentences() {

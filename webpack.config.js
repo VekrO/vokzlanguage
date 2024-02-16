@@ -34,8 +34,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.html', // Nome do arquivo gerado pelo HtmlWebpackPlugin
-      inject: false,
+      filename: 'index.html', // Nome do arquivo gerado pelo HtmlWebpackPlugin.
+      inject: true, // Injeta no index.html o arquivo de bundle automaticamente sem precisar importar por padrão.
     })
   ]
 };
