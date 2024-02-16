@@ -1,0 +1,11 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.word {
+    padding: 5px;
+    background-color: whitesmoke;
+    border: #ccc 1px solid;
+}
