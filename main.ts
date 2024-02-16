@@ -36,21 +36,23 @@ class Main {
     createParagraph() {
         
         const sentence: Sentence = this.sentenceService.createSentence(this.words);
-        const wordList: Word[] = sentence.get();
+        const words: Word[] = sentence.get() as Word[]; // Lista de palavras.
 
         const elementRoot: HTMLElement = this.documentService.getElementByClassName('.text');
         if(!elementRoot) {
             return;
         }
 
-        for(let i = 0; i < wordList.length; i++) {
-            let word: Word = wordList[i];
+        for(let i = 0; i < words.length; i++) {
+            const word: Word = words[i];
+            const isBreakpoint: boolean = word && word.get() == '<br>'; // Verifica se é para dar espaço.
             if(word) {
-                const elementChild: HTMLElement = this.documentService.createElement('span', word.get());
+                const tag: string = isBreakpoint ? 'br' : 'span';
+                const elementChild: HTMLElement = this.documentService.createElement(tag, word.get());
                 this.documentService.addEventListener(elementChild, 'click', word.show.bind(word));
                 this.documentService.setStyle(elementChild, 'padding', '5px');
                 this.documentService.appendChild(elementRoot, elementChild);
-            }   
+            }
         }
 
     }
