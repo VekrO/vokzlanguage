@@ -26,6 +26,12 @@ export class DocumentService {
         }
     }
 
+    removeProperty(element: HTMLElement, property: string) {
+        if(element) {
+            element.style.removeProperty(property);
+        }
+    }
+
     appendChild(elementRoot: HTMLElement, elementChild: HTMLElement) {
         if(elementRoot && elementChild) {
             elementRoot.appendChild(elementChild);

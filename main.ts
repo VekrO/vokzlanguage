@@ -8,15 +8,13 @@ import SentencesJson from './sentences.json';
 
 class Main {
 
-    private sentences: Sentence[] = [];
+    private readonly rootClassName: string = '.root';
     private words: Word[] = [];
 
     constructor(private sentenceService: SentenceService, private wordService: WordService, private documentService: DocumentService) {
             
         this.createSentences();
         this.createParagraph();
-
-        console.log('teste')
 
     }
 
@@ -40,10 +38,14 @@ class Main {
         const sentence: Sentence = this.sentenceService.createSentence(this.words);
         const words: Word[] = sentence.get() as Word[]; // Lista de palavras.
 
-        const elementRoot: HTMLElement = this.documentService.getElementByClassName('.text');
+        const elementRoot: HTMLElement = this.documentService.getElementByClassName(this.rootClassName);
         if(!elementRoot) {
             return;
         }
+
+        this.documentService.setStyle(elementRoot, '-webkit-user-select', 'none')
+        this.documentService.setStyle(elementRoot, '-ms-user-select', 'none')
+        this.documentService.setStyle(elementRoot, 'user-select', 'none')
 
         for(let i = 0; i < words.length; i++) {
             const word: Word = words[i];
@@ -51,8 +53,9 @@ class Main {
             if(word) {
                 const tag: string = isBreakpoint ? 'br' : 'span';
                 const elementChild: HTMLElement = this.documentService.createElement(tag, word.get());
-                this.documentService.addEventListener(elementChild, 'click', word.show.bind(word));
-                this.documentService.setStyle(elementChild, 'padding', '5px');
+                this.documentService.addEventListener(elementChild, 'click', (event: MouseEvent) => word.handle(event, elementChild, this.documentService));
+                this.documentService.setStyle(elementChild, 'margin', '5px');
+                this.documentService.setStyle(elementChild, 'cursor', 'pointer');
                 this.documentService.appendChild(elementRoot, elementChild);
             }
         }
