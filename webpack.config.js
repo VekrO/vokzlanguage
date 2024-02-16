@@ -31,13 +31,11 @@ module.exports = {
     compress: true,
     port: 9000,
   },
-  plugins: ['index'].map(
-    (file) =>
-      new HtmlWebpackPlugin({
-        template: './src/' + file + '.html',
-        inject: true,
-        chunks: ['index', 'main'],
-        filename: './' + file + '.html' //relative to root of the application
-      })
-  )
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html', // Nome do arquivo gerado pelo HtmlWebpackPlugin
+      inject: false,
+    })
+  ]
 };
